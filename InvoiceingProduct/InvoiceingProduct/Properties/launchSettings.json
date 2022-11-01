@@ -1,0 +1,29 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:13715",
+      "sslPort": 44319
+    }
+  },
+  "profiles": {
+    "InvoiceingProduct": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__DefaultConnection": "Data Source=LAPTOP-0VK4569C;Initial Catalog=InvoiceingProduct;Integrated Security=True;MultipleActiveResultSets=True"
+      },
+      "applicationUrl": "https://localhost:7059;http://localhost:5059",
+      "dotnetRunMessages": true
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
