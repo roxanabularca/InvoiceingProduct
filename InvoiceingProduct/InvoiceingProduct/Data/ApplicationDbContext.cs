@@ -182,6 +182,8 @@ namespace InvoiceingProduct.Data
                 entity.HasKey(e => e.IdPayment)
                     .HasName("PK__Payments__613289C07B1A10BB");
 
+                entity.ToTable("Payment");
+
                 entity.Property(e => e.IdPayment).ValueGeneratedNever();
 
                 entity.Property(e => e.PaymentAuthorization).HasMaxLength(50);
@@ -231,6 +233,8 @@ namespace InvoiceingProduct.Data
             {
                 entity.HasKey(e => e.IdVendor)
                     .HasName("PK__Vendors__1CEBDFDB45E6C3F7");
+
+                entity.ToTable("Vendor");
 
                 entity.Property(e => e.IdVendor).ValueGeneratedNever();
 
