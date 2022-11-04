@@ -56,5 +56,35 @@ namespace InvoiceingProduct.Repository
         {
             return MapDBObjectToModel(_DBContext.Payments.FirstOrDefault(x => x.IdPayment == id));
         }
+        public void InsertPayment(PaymentModel model)
+        {
+            model.IdPayment = Guid.NewGuid();
+            _DBContext.Payments.Add(MapModelToDBObject(model));
+            _DBContext.SaveChanges();
+        }
+        public void UpdatePayment(PaymentModel model)
+        {
+            var dbobject = _DBContext.Payments.FirstOrDefault(x => x.IdPayment == model.IdPayment);
+            if (dbobject != null)
+            {
+                dbobject.IdPayment = model.IdPayment;
+                dbobject.IdInvoice = model.IdInvoice;
+                dbobject.PaymentDate = model.PaymentDate;
+                dbobject.PaymentType = model.PaymentType;
+                dbobject.AmountPaid = model.AmountPaid;
+                dbobject.PaymentAuthorization = model.PaymentAuthorization;
+                _DBContext.SaveChanges();
+            }
+        }
+        public void DeletePayment (PaymentModel model)
+        {
+            var dbobject=_DBContext.Payments.FirstOrDefault (x => x.IdPayment == model.IdPayment);
+            if (dbobject != null)
+            {
+                _DBContext.Payments.Remove(dbobject);
+                _DBContext.SaveChanges();
+            }
+        }
+
     }
 }

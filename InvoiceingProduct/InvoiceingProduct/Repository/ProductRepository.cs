@@ -50,5 +50,32 @@ namespace InvoiceingProduct.Repository
         {
             return MapDBObjectToModel(_DBContext.Products.FirstOrDefault(x => x.IdProduct == id));
         }
-    }
+        public void InsertProduct(ProductModel model)
+        {
+            model.IdProduct = Guid.NewGuid();
+            _DBContext.Products.Add(MapModelToDBObject(model));
+            _DBContext.SaveChanges();
+
+        }
+        public void UpdateProduct(ProductModel model)
+        { 
+            var dbobject = _DBContext.Products.FirstOrDefault(x=>x.IdProduct == model.IdProduct);
+            if (dbobject != null)
+            {
+                dbobject.IdProduct = model.IdProduct;
+                dbobject.Description = model.Description;
+                dbobject.Comments = model.Comments;
+                _DBContext.SaveChanges();
+            }
+                    
+        }
+        public void DeleteProduct(ProductModel model)
+        {
+            var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == model.IdProduct);
+            if (dbobject == null)
+            { 
+                _DBContext.Products.Remove(dbobject);
+                _DBContext.SaveChanges();
+            }
+        }
 }

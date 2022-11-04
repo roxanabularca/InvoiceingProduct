@@ -53,8 +53,30 @@ namespace InvoiceingProduct.Repository
         }
         public void InsertPurchase(PurchaseModel model)
         {
-
-            model.IdPurchase =
+            model.IdPurchase = Guid.NewGuid();
+            _DBContext.Purchases.Add(MapModelToDBObject(model));
+            _DBContext.SaveChanges();
         }
+        public void UpdatePurchase(PurchaseModel model)
+        {
+            var dbobject = _DBContext.Purchases.FirstOrDefault(x => x.IdPurchase == model.IdPurchase);
+            if (dbobject != null)
+            {
+                dbobject.IdPurchase = model.IdPurchase;
+                dbobject.IdOffer = model.IdOffer;
+                dbobject.Quantity = model.Quantity;
+                _DBContext.SaveChanges();
+            }
+        }
+        public void DeletaPurchase(PurchaseModel model)
+        {
+            var dbobject = _DBContext.Purchases.FirstOrDefault(x => x.IdPurchase == model.IdPurchase);
+            if (dbobject != null)
+            {
+                _DBContext.Purchases.Remove(dbobject);
+                _DBContext.SaveChanges();
+            }
+        }
+
     }
 }

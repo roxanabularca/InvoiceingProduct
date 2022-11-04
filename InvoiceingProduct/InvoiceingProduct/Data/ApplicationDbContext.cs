@@ -174,7 +174,7 @@ namespace InvoiceingProduct.Data
                     .WithMany(p => p.Offers)
                     .HasForeignKey(d => d.IdVendor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Offer_Vendors");
+                    .HasConstraintName("FK_Offer_Vendor");
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -196,7 +196,7 @@ namespace InvoiceingProduct.Data
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.IdInvoice)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Payments_Invoice");
+                    .HasConstraintName("FK_Payment_Invoice");
             });
 
             modelBuilder.Entity<Product>(entity =>

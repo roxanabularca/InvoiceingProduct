@@ -54,7 +54,30 @@ namespace InvoiceingProduct.Repository
         }
         public void InsertVendor(VendorModel model)
         {
+            model.IdVendor = Guid.NewGuid();
+            _DBContext.Vendors.Add(MapModelToDBObject(model));
+            _DBContext.SaveChanges();
+        }
+        public void UpdateVendor(VendorModel model)
+        {
+            var dbobject = _DBContext.Vendors.FirstOrDefault(x => x.IdVendor == model.IdVendor);
+            if (dbobject != null)
+            {
+                dbobject.IdVendor = model.IdVendor;
+                dbobject.DeliveryType = model.DeliveryType;
+                dbobject.Address = model.Address;
+                dbobject.Email = model.Email;
+                _DBContext.SaveChanges();
+            }
 
         }
+        public void DeleteVendor(VendorModel model)
+        {
+            var dbobject = _DBContext.Vendors.FirstOrDefault(x => x.IdVendor == model.IdVendor);
+            if (dbobject != null)
+            { 
+                _DBContext.Vendors.Remove(dbobject);
+                _DBContext.SaveChanges();
+            }
     }
 }
