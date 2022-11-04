@@ -8,21 +8,21 @@ namespace InvoiceingProduct.Repository
     {
         private readonly ApplicationDbContext _DBContext;
         public ProductRepository()
-        { 
-            _DBContext=new ApplicationDbContext();
+        {
+            _DBContext = new ApplicationDbContext();
         }
         public ProductRepository(ApplicationDbContext dBContext)
         {
             _DBContext = dBContext;
         }
         private ProductModel MapDBObjectToModel(Product dbobject)
-        { 
+        {
             var model = new ProductModel();
             if (dbobject != null)
             {
                 model.IdProduct = dbobject.IdProduct;
                 model.Description = dbobject.Description;
-                model.Comments=dbobject.Comments;
+                model.Comments = dbobject.Comments;
             }
             return model;
         }
@@ -58,8 +58,8 @@ namespace InvoiceingProduct.Repository
 
         }
         public void UpdateProduct(ProductModel model)
-        { 
-            var dbobject = _DBContext.Products.FirstOrDefault(x=>x.IdProduct == model.IdProduct);
+        {
+            var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == model.IdProduct);
             if (dbobject != null)
             {
                 dbobject.IdProduct = model.IdProduct;
@@ -67,15 +67,16 @@ namespace InvoiceingProduct.Repository
                 dbobject.Comments = model.Comments;
                 _DBContext.SaveChanges();
             }
-                    
+
         }
         public void DeleteProduct(ProductModel model)
         {
             var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == model.IdProduct);
             if (dbobject == null)
-            { 
+            {
                 _DBContext.Products.Remove(dbobject);
                 _DBContext.SaveChanges();
             }
         }
+    }
 }

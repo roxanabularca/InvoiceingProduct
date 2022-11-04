@@ -75,9 +75,10 @@ namespace InvoiceingProduct.Repository
         {
             var dbobject = _DBContext.Vendors.FirstOrDefault(x => x.IdVendor == model.IdVendor);
             if (dbobject != null)
-            { 
+            {
                 _DBContext.Vendors.Remove(dbobject);
                 _DBContext.SaveChanges();
             }
+        }
     }
 }
