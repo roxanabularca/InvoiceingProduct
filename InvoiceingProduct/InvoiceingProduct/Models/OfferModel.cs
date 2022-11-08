@@ -12,7 +12,7 @@ namespace InvoiceingProduct.Models
         [Range(0.01d, int.MaxValue, ErrorMessage = "The unit price must be a positive number.")]
         public decimal UnitPrice { get; set; }
 
-        [StringLength(10,ErrorMessage ="StringLength maxim 10 characters")]
+        [StringLength(10,ErrorMessage = "String too long( max. 10 characters)")]
         public string Currency { get; set; } = null!;
         public bool IsAvailable { get; set; }
     }

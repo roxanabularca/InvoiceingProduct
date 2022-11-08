@@ -7,9 +7,13 @@ namespace InvoiceingProduct.Repository
     public class OfferRepository
     {
         private readonly ApplicationDbContext _DBContext;
+        private ProductRepository _ProductRepository;
+        private VendorRepository _VendorRepository;
 
         public OfferRepository()
         {
+            _ProductRepository = new ProductRepository();
+            _VendorRepository = new VendorRepository();
             _DBContext = new ApplicationDbContext();
         }
         public OfferRepository(ApplicationDbContext dBContext)
@@ -77,9 +81,9 @@ namespace InvoiceingProduct.Repository
                 _DBContext.SaveChanges();
             }
         }
-        public void DeleteOffer(OfferModel model)
+        public void DeleteOffer(Guid id)
         {
-            var dbobject = _DBContext.Offers.FirstOrDefault(x => x.IdOffer == model.IdOffer);
+            var dbobject = _DBContext.Offers.FirstOrDefault(x => x.IdOffer == id);
             if (dbobject != null)
             {
                 _DBContext.Offers.Remove(dbobject);

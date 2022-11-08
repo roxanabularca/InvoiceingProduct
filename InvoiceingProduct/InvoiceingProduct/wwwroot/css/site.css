@@ -16,3 +16,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+select {
+    width :100%;
+}

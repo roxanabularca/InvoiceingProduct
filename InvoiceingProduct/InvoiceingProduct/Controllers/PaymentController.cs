@@ -24,7 +24,8 @@ namespace InvoiceingProduct.Controllers
         // GET: PaymentController/Details/5
         public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _paymentRepository.GetPaymentById(id);
+            return View("DetailsPayment",model);
         }
 
         // GET: PaymentController/Create
@@ -75,19 +76,24 @@ namespace InvoiceingProduct.Controllers
                 if (task.Result)
                 {
                     _paymentRepository.UpdatePayment(model);
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    return RedirectToAction("Index",id);
+                }
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", id);
             }
         }
 
         // GET: PaymentController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _paymentRepository.GetPaymentById(id);
+            return View("DeletePayment",model);
         }
 
         // POST: PaymentController/Delete/5
@@ -97,11 +103,12 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
+                _paymentRepository.DeletePayment(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete",id);
             }
         }
     }

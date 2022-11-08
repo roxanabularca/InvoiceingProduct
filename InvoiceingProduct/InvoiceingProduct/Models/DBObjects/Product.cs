@@ -11,6 +11,7 @@ namespace InvoiceingProduct.Models.DBObjects
         }
 
         public Guid IdProduct { get; set; }
+        public string ProductName { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string? Comments { get; set; }
 

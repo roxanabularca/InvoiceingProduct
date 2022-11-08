@@ -15,14 +15,15 @@ namespace InvoiceingProduct.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            var list = _vendorRepository.GetAllVendors();
+            return View(list);
         }
 
         // GET: VendorController/Details/5
         public ActionResult Details(Guid id) 
         {
-            var list = _vendorRepository.GetAllVendors();
-            return View(list);
+            var model = _vendorRepository.GetVendorById(id);
+            return View("DetailsVendor",model);
         }
 
         // GET: VendorController/Create
@@ -72,19 +73,24 @@ namespace InvoiceingProduct.Controllers
                 if (task.Result)
                 {
                     _vendorRepository.UpdateVendor(model);
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction(nameof(Index));
+                else 
+                {
+                    return RedirectToAction("Index",id);
+                }
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", id);
             }
         }
 
         // GET: VendorController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _vendorRepository.GetVendorById(id);
+            return View("DeleteVendor",model);
         }
 
         // POST: VendorController/Delete/5
@@ -94,11 +100,12 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
+                _vendorRepository.DeleteVendor(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete",id);
             }
         }
     }

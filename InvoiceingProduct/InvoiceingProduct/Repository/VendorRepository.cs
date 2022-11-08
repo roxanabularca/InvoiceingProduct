@@ -20,6 +20,7 @@ namespace InvoiceingProduct.Repository
             var model = new VendorModel();
             if (dbobject != null)
             {  
+                model.Name=dbobject.Name;
                 model.IdVendor=dbobject.IdVendor;
                 model.DeliveryType=dbobject.DeliveryType;
                 model.Address=dbobject.Address;
@@ -32,6 +33,7 @@ namespace InvoiceingProduct.Repository
             var dbobject = new Vendor();
             if( model != null)
             {
+                dbobject.Name=model.Name;
                 dbobject.IdVendor = model.IdVendor;
                 dbobject.DeliveryType = model.DeliveryType;
                 dbobject.Address = model.Address;
@@ -63,6 +65,7 @@ namespace InvoiceingProduct.Repository
             var dbobject = _DBContext.Vendors.FirstOrDefault(x => x.IdVendor == model.IdVendor);
             if (dbobject != null)
             {
+                dbobject.Name = model.Name;
                 dbobject.IdVendor = model.IdVendor;
                 dbobject.DeliveryType = model.DeliveryType;
                 dbobject.Address = model.Address;
@@ -71,9 +74,9 @@ namespace InvoiceingProduct.Repository
             }
 
         }
-        public void DeleteVendor(VendorModel model)
+        public void DeleteVendor(Guid id)
         {
-            var dbobject = _DBContext.Vendors.FirstOrDefault(x => x.IdVendor == model.IdVendor);
+            var dbobject = _DBContext.Vendors.FirstOrDefault(x => x.IdVendor == id);
             if (dbobject != null)
             {
                 _DBContext.Vendors.Remove(dbobject);

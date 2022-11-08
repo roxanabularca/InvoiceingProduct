@@ -210,7 +210,7 @@ namespace InvoiceingProduct.Data
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => e.IdProduct)
-                    .HasName("PK__Product__2E8946D4D33C5832");
+                    .HasName("PK__tmp_ms_x__2E8946D4212DACDC");
 
                 entity.ToTable("Product");
 
@@ -218,7 +218,9 @@ namespace InvoiceingProduct.Data
 
                 entity.Property(e => e.Comments).HasMaxLength(50);
 
-                entity.Property(e => e.Description).HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(250);
+
+                entity.Property(e => e.ProductName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Purchase>(entity =>

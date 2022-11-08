@@ -1,4 +1,5 @@
-﻿@model InvoiceingProduct.Models.OfferModel
+﻿@using Microsoft.AspNetCore
+@model InvoiceingProduct.Models.OfferModel
 
 @{
     ViewData["Title"] = "CreateOffer";
@@ -20,13 +21,14 @@
             </div>*@
             <div class="form-group">
                 <label asp-for="IdProduct" class="control-label"></label>
-                <input asp-for="IdProduct" class="form-control" />
-                <span asp-validation-for="IdProduct" class="text-danger"></span>
+                @Html.DropDownList("IdProduct",@ViewBag.ProductList,"","")
             </div>
+            
             <div class="form-group">
                 <label asp-for="IdVendor" class="control-label"></label>
-                <input asp-for="IdVendor" class="form-control" />
-                <span asp-validation-for="IdVendor" class="text-danger"></span>
+                @Html.DropDownList("IdVendor",@ViewBag.VendorList,"","")
+                @*<input asp-for="IdVendor" class="form-control" />
+                <span asp-validation-for="IdVendor" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="UnitPrice" class="control-label"></label>

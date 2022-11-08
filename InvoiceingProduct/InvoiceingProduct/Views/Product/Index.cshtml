@@ -10,14 +10,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@if(Model !=null)
-{   
 <table class="table">
     <thead>
         <tr>
             @*<th>
                 @Html.DisplayNameFor(model => model.IdProduct)
             </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
@@ -28,28 +29,26 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
-                <tr>
-                   @* <td>
-                        @Html.DisplayFor(modelItem => item.IdProduct)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Comments)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.IdProduct }) |
-                        @Html.ActionLink("Details", "Details", new {  id=item.IdProduct }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.IdProduct  })
-                    </td>
-                </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.IdProduct)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.IdProduct  }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.IdProduct  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.IdProduct  })
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-}
-else 
-{
-    <p>"empty model"</p>
-}

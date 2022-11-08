@@ -81,9 +81,9 @@ namespace InvoiceingProduct.Repository
                 _DBContext.SaveChanges();
             }
         }
-        public void DeleteInvoice(InvoiceModel model)
+        public void DeleteInvoice(Guid id)
         {
-            var dbobject = _DBContext.Invoices.FirstOrDefault(x => x.IdInvoice == model.IdInvoice);
+            var dbobject = _DBContext.Invoices.FirstOrDefault(x => x.IdInvoice == id);
             if (dbobject != null)
             {
                 _DBContext.Invoices.Remove(dbobject);

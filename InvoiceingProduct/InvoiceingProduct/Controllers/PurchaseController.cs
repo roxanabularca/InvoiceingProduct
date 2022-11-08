@@ -23,7 +23,8 @@ namespace InvoiceingProduct.Controllers
         // GET: PurchaseController/Details/5
         public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _purchaseRepository.GetPurchaseById(id);
+            return View("DetailsPurchase",model);
         }
 
         // GET: PurchaseController/Create
@@ -71,22 +72,27 @@ namespace InvoiceingProduct.Controllers
                 var model = new PurchaseModel();
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
-                if(task.Result)
-                { 
+                if (task.Result)
+                {
                     _purchaseRepository.UpdatePurchase(model);
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    return RedirectToAction("Index", id);
+                }
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", id);
             }
         }
 
         // GET: PurchaseController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _purchaseRepository.GetPurchaseById(id);
+            return View("DeletePurchase",model);
         }
 
         // POST: PurchaseController/Delete/5
@@ -96,11 +102,12 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
+                _purchaseRepository.DeletaPurchase(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete",id);
             }
         }
     }

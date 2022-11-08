@@ -3,15 +3,20 @@ using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
     public class OfferController : Controller
     {
         private OfferRepository _offerRepository;
+        private ProductRepository _productRepository;
+        private VendorRepository _vendorRepository;
 
         public OfferController(ApplicationDbContext dbcontext)
         {
+            _productRepository = new ProductRepository(dbcontext);
+            _vendorRepository = new VendorRepository(dbcontext);
             _offerRepository = new OfferRepository(dbcontext);
         }
         // GET: OfferController
@@ -24,12 +29,19 @@ namespace InvoiceingProduct.Controllers
         // GET: OfferController/Details/5
         public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _offerRepository.GetOfferById(id);
+            return View("DetailsOffer",model);
         }
 
         // GET: OfferController/Create
         public ActionResult Create()
         {
+            var products = _productRepository.GetAllProducts();
+            var productList = products.Select(x => new SelectListItem() { Text = x.ProductName, Value = x.IdProduct.ToString() });
+            ViewBag.ProductList = productList;
+            var vendors = _vendorRepository.GetAllVendors();
+            var vendorList = vendors.Select(x => new SelectListItem() { Text = x.Name, Value = x.IdVendor.ToString() });
+            ViewBag.VendorList = vendorList;
             return View("CreateOffer");
         }
 
@@ -59,6 +71,9 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _offerRepository.GetOfferById(id);
+            ViewBag.Products = _productRepository.GetAllProducts();
+            ViewBag.Vendors = _vendorRepository.GetAllVendors();
+
             return View("EditOffer",model);
         }
 
@@ -75,19 +90,24 @@ namespace InvoiceingProduct.Controllers
                 if (task.Result)
                 {
                     _offerRepository.UpdateOffer(model);
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    return RedirectToAction("Index", id);
+                }
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", id);
             }
         }
 
         // GET: OfferController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _offerRepository.GetOfferById(id);
+            return View("DeleteOffer",model);
         }
 
         // POST: OfferController/Delete/5
@@ -97,11 +117,12 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
+                _offerRepository.DeleteOffer(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete",id);
             }
         }
     }

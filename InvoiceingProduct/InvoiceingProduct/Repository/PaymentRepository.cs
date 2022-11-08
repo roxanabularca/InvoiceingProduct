@@ -76,9 +76,9 @@ namespace InvoiceingProduct.Repository
                 _DBContext.SaveChanges();
             }
         }
-        public void DeletePayment (PaymentModel model)
+        public void DeletePayment (Guid id)
         {
-            var dbobject=_DBContext.Payments.FirstOrDefault (x => x.IdPayment == model.IdPayment);
+            var dbobject=_DBContext.Payments.FirstOrDefault (x => x.IdPayment ==id);
             if (dbobject != null)
             {
                 _DBContext.Payments.Remove(dbobject);

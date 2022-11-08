@@ -68,9 +68,9 @@ namespace InvoiceingProduct.Repository
                 _DBContext.SaveChanges();
             }
         }
-        public void DeletaPurchase(PurchaseModel model)
+        public void DeletaPurchase(Guid id)
         {
-            var dbobject = _DBContext.Purchases.FirstOrDefault(x => x.IdPurchase == model.IdPurchase);
+            var dbobject = _DBContext.Purchases.FirstOrDefault(x => x.IdPurchase == id);
             if (dbobject != null)
             {
                 _DBContext.Purchases.Remove(dbobject);

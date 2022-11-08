@@ -23,7 +23,8 @@ namespace InvoiceingProduct.Controllers
         // GET: ProductController/Details/5
         public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _productRepository.GetProductById(id);
+            return View("DetailsProduct",model);
         }
 
         // GET: ProductController/Create
@@ -74,19 +75,24 @@ namespace InvoiceingProduct.Controllers
                 if (task.Result)
                 {
                     _productRepository.UpdateProduct(model);
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction(nameof(Index));
+                else 
+                {
+                    return RedirectToAction("Index",id);
+                }
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return RedirectToAction("Index",id);
             }
         }
 
         // GET: ProductController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _productRepository.GetProductById(id);
+            return View("DeleteProduct",model);
         }
 
         // POST: ProductController/Delete/5
@@ -96,11 +102,12 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
+                _productRepository.DeleteProduct(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return RedirectToAction("Delete",id);
             }
         }
     }

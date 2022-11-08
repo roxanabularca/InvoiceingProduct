@@ -25,7 +25,8 @@ namespace InvoiceingProduct.Controllers
         // GET: InvoiceController/Details/5
         public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _invoiceRepository.GetInvoiceById(id);
+            return View("DetailsInvoice",model);
         }
 
         // GET: InvoiceController/Create
@@ -76,19 +77,24 @@ namespace InvoiceingProduct.Controllers
                 if (task.Result)
                 {
                     _invoiceRepository.UpdateInvoice(model);
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                else
+                {
+                    return RedirectToAction("Index", id);
+                }
             }
             catch
             {
-                return RedirectToAction("Edit",id);
+                return RedirectToAction("Index",id);
             }
         }
 
         // GET: InvoiceController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _invoiceRepository.GetInvoiceById(id);
+            return View("DeleteInvoice",model);
         }
 
         // POST: InvoiceController/Delete/5
@@ -98,11 +104,12 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
+                _invoiceRepository.DeleteInvoice(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete",id);
             }
         }
     }

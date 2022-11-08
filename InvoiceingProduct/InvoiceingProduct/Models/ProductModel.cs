@@ -6,7 +6,10 @@ namespace InvoiceingProduct.Models
     {
         public Guid IdProduct { get; set; }
 
-        [StringLength(50, ErrorMessage = "StringLength maxim 50 characters")]
+        [StringLength(50, ErrorMessage = "String too long( max. 50 characters).")]
+        public string ProductName { get; set; } = null!;
+
+        [StringLength(250, ErrorMessage = "String too long( max. 250 characters).")]
         public string Description { get; set; } = null!;
         public string? Comments { get; set; }
     }

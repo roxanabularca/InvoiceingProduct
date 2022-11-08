@@ -20,6 +20,7 @@ namespace InvoiceingProduct.Repository
             var model = new ProductModel();
             if (dbobject != null)
             {
+                model.ProductName=dbobject.ProductName;
                 model.IdProduct = dbobject.IdProduct;
                 model.Description = dbobject.Description;
                 model.Comments = dbobject.Comments;
@@ -31,6 +32,7 @@ namespace InvoiceingProduct.Repository
             var dbobject = new Product();
             if (model != null)
             {
+                dbobject.ProductName = model.ProductName;
                 dbobject.IdProduct = model.IdProduct;
                 dbobject.Description = model.Description;
                 dbobject.Comments = model.Comments;
@@ -61,7 +63,8 @@ namespace InvoiceingProduct.Repository
         {
             var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == model.IdProduct);
             if (dbobject != null)
-            {
+            {  
+                dbobject.ProductName = model.ProductName;
                 dbobject.IdProduct = model.IdProduct;
                 dbobject.Description = model.Description;
                 dbobject.Comments = model.Comments;
@@ -69,10 +72,10 @@ namespace InvoiceingProduct.Repository
             }
 
         }
-        public void DeleteProduct(ProductModel model)
+        public void DeleteProduct(Guid id)
         {
-            var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == model.IdProduct);
-            if (dbobject == null)
+            var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == id);
+            if (dbobject != null)
             {
                 //var products =_DBContext.Offers.Select(x => x.IdOffer == dbobject.IdProduct);
                 //foreach (var product in products)

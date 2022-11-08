@@ -15,7 +15,7 @@ namespace InvoiceingProduct.Models
         [Range(0.01d,int.MaxValue,ErrorMessage="The invoice amount must be a positive number.")]
         public decimal InvoiceAmount { get; set; }
 
-        [Range(0.01d, int.MaxValue, ErrorMessage = "The intax amount must be a positive number.")]
+        [Range(0.01d, int.MaxValue, ErrorMessage = "The invoice amount must be a positive number.")]
         public decimal TaxAmount { get; set; }
 
         [DisplayFormat(DataFormatString = "0:MM/dd/yyyy")]
