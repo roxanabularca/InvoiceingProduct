@@ -1,0 +1,73 @@
+﻿@model IEnumerable<InvoiceingProduct.Models.PaymentModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if(Model !=null)
+{
+<table class="table">
+    <thead>
+        <tr>
+          @*  <th>
+                @Html.DisplayNameFor(model => model.IdPayment)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.IdInvoice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountPaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentAuthorization)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           @* <td>
+                @Html.DisplayFor(modelItem => item.IdPayment)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.IdInvoice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountPaid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentAuthorization)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.IdPayment }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.IdPayment  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.IdPayment })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}
+else
+{
+<p>"empty model"</p>
+}

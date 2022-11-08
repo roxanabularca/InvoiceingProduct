@@ -17,11 +17,12 @@ namespace InvoiceingProduct.Controllers
         // GET: PaymentController
         public ActionResult Index()
         {
-            return View();
+            var list = _paymentRepository.GelAllPayments();
+            return View(list);
         }
 
         // GET: PaymentController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -40,27 +41,41 @@ namespace InvoiceingProduct.Controllers
             try
             {
                 var model = new PaymentModel();
-                return RedirectToAction(nameof(Index));
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if(task.Result)
+                {
+                    _paymentRepository.InsertPayment(model);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("CreatePayment");
             }
         }
 
         // GET: PaymentController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var model = _paymentRepository.GetPaymentById(id);
+            return View("EditPayment",model);
         }
 
         // POST: PaymentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
+                var model = new PaymentModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _paymentRepository.UpdatePayment(model);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -70,7 +85,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PaymentController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
@@ -78,7 +93,7 @@ namespace InvoiceingProduct.Controllers
         // POST: PaymentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {

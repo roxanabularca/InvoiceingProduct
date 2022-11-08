@@ -142,7 +142,11 @@ namespace InvoiceingProduct.Data
 
                 entity.Property(e => e.DueDate).HasColumnType("datetime");
 
+                entity.Property(e => e.InvoiceAmount).HasColumnType("decimal(18, 2)");
+
                 entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.IdPurchaseNavigation)
                     .WithMany(p => p.Invoices)
@@ -163,6 +167,8 @@ namespace InvoiceingProduct.Data
                 entity.Property(e => e.Currency)
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.IdProductNavigation)
                     .WithMany(p => p.Offers)
@@ -185,6 +191,8 @@ namespace InvoiceingProduct.Data
                 entity.ToTable("Payment");
 
                 entity.Property(e => e.IdPayment).ValueGeneratedNever();
+
+                entity.Property(e => e.AmountPaid).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.PaymentAuthorization).HasMaxLength(50);
 
@@ -232,7 +240,7 @@ namespace InvoiceingProduct.Data
             modelBuilder.Entity<Vendor>(entity =>
             {
                 entity.HasKey(e => e.IdVendor)
-                    .HasName("PK__Vendors__1CEBDFDB45E6C3F7");
+                    .HasName("PK__tmp_ms_x__1CEBDFDB5BECEEC9");
 
                 entity.ToTable("Vendor");
 
@@ -245,6 +253,8 @@ namespace InvoiceingProduct.Data
                     .IsFixedLength();
 
                 entity.Property(e => e.Email).HasMaxLength(50);
+
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

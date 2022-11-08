@@ -9,7 +9,7 @@ namespace InvoiceingProduct.Models.DBObjects
         public Guid IdInvoice { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentType { get; set; } = null!;
-        public int AmountPaid { get; set; }
+        public decimal AmountPaid { get; set; }
         public string PaymentAuthorization { get; set; } = null!;
 
         public virtual Invoice IdInvoiceNavigation { get; set; } = null!;

@@ -63,7 +63,7 @@ namespace InvoiceingProduct.Repository
             _DBContext.Offers.Add(MapModelToDBObject(model));
             _DBContext.SaveChanges();
         }
-        public void UnpdateOffer(OfferModel model)
+        public void UpdateOffer(OfferModel model)
         {
             var dbobject = _DBContext.Offers.FirstOrDefault(x => x.IdOffer == model.IdOffer);
             if (dbobject != null)

@@ -74,6 +74,11 @@ namespace InvoiceingProduct.Repository
             var dbobject = _DBContext.Products.FirstOrDefault(x => x.IdProduct == model.IdProduct);
             if (dbobject == null)
             {
+                //var products =_DBContext.Offers.Select(x => x.IdOffer == dbobject.IdProduct);
+                //foreach (var product in products)
+                //{
+                //    _DBContext.
+                //}
                 _DBContext.Products.Remove(dbobject);
                 _DBContext.SaveChanges();
             }

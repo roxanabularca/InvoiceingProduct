@@ -1,0 +1,55 @@
+﻿@model IEnumerable<InvoiceingProduct.Models.ProductModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if(Model !=null)
+{   
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.IdProduct)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                   @* <td>
+                        @Html.DisplayFor(modelItem => item.IdProduct)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.IdProduct }) |
+                        @Html.ActionLink("Details", "Details", new {  id=item.IdProduct }) |
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.IdProduct  })
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+}
+else 
+{
+    <p>"empty model"</p>
+}

@@ -16,11 +16,12 @@ namespace InvoiceingProduct.Controllers
         // GET: ProductController
         public ActionResult Index()
         {
-            return View();
+            var list = _productRepository.GetAllProducts();
+            return View(list);
         }
 
         // GET: ProductController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -39,27 +40,41 @@ namespace InvoiceingProduct.Controllers
             try
             {
                 var model = new ProductModel();
-                return RedirectToAction(nameof(Index));
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _productRepository.InsertProduct(model);
+                }
+                return RedirectToAction ("Index");
             }
             catch
             {
-                return View();
+                return View("CreateProduct");
             }
         }
 
         // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var model = _productRepository.GetProductById(id);
+            return View("EditProduct",model);
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
+                var model = new ProductModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _productRepository.UpdateProduct(model);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -69,7 +84,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
@@ -77,7 +92,7 @@ namespace InvoiceingProduct.Controllers
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {

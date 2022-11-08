@@ -17,11 +17,12 @@ namespace InvoiceingProduct.Controllers
         // GET: OfferController
         public ActionResult Index()
         {
-            return View();
+            var list = _offerRepository.GetAllOffers();
+            return View(list);
         }
 
         // GET: OfferController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -40,27 +41,41 @@ namespace InvoiceingProduct.Controllers
             try
             {
                 var model = new OfferModel();
-                return RedirectToAction(nameof(Index));
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _offerRepository.InsertOffer(model);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("CreateOffer");
             }
         }
 
         // GET: OfferController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var model = _offerRepository.GetOfferById(id);
+            return View("EditOffer",model);
         }
 
         // POST: OfferController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
+                var model = new OfferModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _offerRepository.UpdateOffer(model);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -70,7 +85,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: OfferController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
@@ -78,7 +93,7 @@ namespace InvoiceingProduct.Controllers
         // POST: OfferController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {

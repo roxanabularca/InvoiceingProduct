@@ -9,7 +9,6 @@ namespace InvoiceingProduct.Models.DBObjects
         {
             Invoices = new HashSet<Invoice>();
         }
-
         public Guid IdPurchase { get; set; }
         public Guid IdOffer { get; set; }
         public int Quantity { get; set; }

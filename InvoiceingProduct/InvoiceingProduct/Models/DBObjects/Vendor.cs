@@ -11,6 +11,7 @@ namespace InvoiceingProduct.Models.DBObjects
         }
 
         public Guid IdVendor { get; set; }
+        public string Name { get; set; } = null!;
         public string DeliveryType { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string? Email { get; set; }
