@@ -11,6 +11,7 @@ namespace InvoiceingProduct.Models.DBObjects
         }
 
         public Guid IdPurchase { get; set; }
+        public string PurchaseName { get; set; } = null!;
         public Guid IdOffer { get; set; }
         public int Quantity { get; set; }
 

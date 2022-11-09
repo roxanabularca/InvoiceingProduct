@@ -13,6 +13,7 @@ namespace InvoiceingProduct.Models.DBObjects
         public Guid IdOffer { get; set; }
         public Guid IdProduct { get; set; }
         public Guid IdVendor { get; set; }
+        public string OfferName { get; set; } = null!;
         public decimal UnitPrice { get; set; }
         public string Currency { get; set; } = null!;
         public bool IsAvailable { get; set; }

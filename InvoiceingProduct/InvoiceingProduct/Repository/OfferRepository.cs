@@ -26,6 +26,7 @@ namespace InvoiceingProduct.Repository
             if (dbobject != null)
             {
                 model.IdOffer = dbobject.IdOffer;
+                model.OfferName=dbobject.OfferName;
                 model.IdProduct = dbobject.IdProduct;
                 model.IdVendor = dbobject.IdVendor;
                 model.UnitPrice = dbobject.UnitPrice;
@@ -40,6 +41,7 @@ namespace InvoiceingProduct.Repository
             if (model != null)
             {
                 dbobject.IdOffer = model.IdOffer;
+                dbobject.OfferName = model.OfferName;
                 dbobject.IdProduct = model.IdProduct;
                 dbobject.IdVendor = model.IdVendor;
                 dbobject.UnitPrice = model.UnitPrice;
@@ -73,6 +75,7 @@ namespace InvoiceingProduct.Repository
             if (dbobject != null)
             {
                 dbobject.IdOffer = model.IdOffer;
+                dbobject.OfferName = model.OfferName;
                 dbobject.IdProduct = model.IdProduct;
                 dbobject.IdVendor = model.IdVendor;
                 dbobject.UnitPrice = model.UnitPrice;

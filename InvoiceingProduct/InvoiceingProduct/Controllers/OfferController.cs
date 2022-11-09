@@ -23,6 +23,15 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Index()
         {
             var list = _offerRepository.GetAllOffers();
+            var productList = _productRepository.GetAllProducts();
+            var vendorList = _vendorRepository.GetAllVendors();
+            foreach (var offer in list)
+            {
+                offer.ProductName = productList?.FirstOrDefault(x => x.IdProduct == offer.IdProduct)?.ProductName;
+                offer.VendorName = vendorList?.FirstOrDefault(x => x.IdVendor == offer.IdVendor)?.Name;
+            }
+
+
             return View(list);
         }
 
@@ -30,6 +39,11 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Details(Guid id)
         {
             var model = _offerRepository.GetOfferById(id);
+            var product = _productRepository.GetProductById(model.IdProduct);
+            model.ProductName = product.ProductName;
+            var vendor = _vendorRepository.GetVendorById(model.IdVendor);
+            model.VendorName = vendor.Name;
+
             return View("DetailsOffer",model);
         }
 
@@ -54,7 +68,9 @@ namespace InvoiceingProduct.Controllers
             {
                 var model = new OfferModel();
                 var task = TryUpdateModelAsync(model);
+                var errors = ModelState.Values.Select(x => x.Errors).ToList();
                 task.Wait();
+                 
                 if (task.Result)
                 {
                     _offerRepository.InsertOffer(model);
@@ -71,11 +87,18 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _offerRepository.GetOfferById(id);
-            ViewBag.Products = _productRepository.GetAllProducts();
-            ViewBag.Vendors = _vendorRepository.GetAllVendors();
+
+            var products = _productRepository.GetAllProducts();
+            var productList = products.Select(x => new SelectListItem() { Text = x.ProductName, Value = x.IdProduct.ToString() });
+            ViewBag.ProductList = productList;
+            var vendors = _vendorRepository.GetAllVendors();
+            var vendorList = vendors.Select(x => new SelectListItem() { Text = x.Name, Value = x.IdVendor.ToString() });
+            ViewBag.VendorList = vendorList;
+           
+           
 
             return View("EditOffer",model);
-        }
+                   }
 
         // POST: OfferController/Edit/5
         [HttpPost]
@@ -107,6 +130,10 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _offerRepository.GetOfferById(id);
+            var product = _productRepository.GetProductById(model.IdProduct);
+            model.ProductName = product.ProductName;
+            var vendor = _vendorRepository.GetVendorById(model.IdVendor);
+            model.VendorName = vendor.Name;
             return View("DeleteOffer",model);
         }
 

@@ -12,6 +12,7 @@ namespace InvoiceingProduct.Models.DBObjects
 
         public Guid IdInvoice { get; set; }
         public Guid IdPurchase { get; set; }
+        public int InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal InvoiceAmount { get; set; }
         public decimal TaxAmount { get; set; }

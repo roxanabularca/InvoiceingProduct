@@ -22,6 +22,7 @@ namespace InvoiceingProduct.Repository
             if (dbobject != null)
             { 
                 model.IdPurchase = dbobject.IdPurchase;
+                model.PurchaseName=dbobject.PurchaseName;
                 model.IdOffer = dbobject.IdOffer;
                 model.Quantity= dbobject.Quantity;
             }
@@ -33,6 +34,7 @@ namespace InvoiceingProduct.Repository
             if (model != null)
             {
                 dbobject.IdPurchase = model.IdPurchase;
+                dbobject.PurchaseName=model.PurchaseName;
                 dbobject.IdOffer = model.IdOffer;
                 dbobject.Quantity = model.Quantity;
             }
@@ -64,6 +66,7 @@ namespace InvoiceingProduct.Repository
             {
                 dbobject.IdPurchase = model.IdPurchase;
                 dbobject.IdOffer = model.IdOffer;
+                dbobject.PurchaseName=model.PurchaseName;
                 dbobject.Quantity = model.Quantity;
                 _DBContext.SaveChanges();
             }

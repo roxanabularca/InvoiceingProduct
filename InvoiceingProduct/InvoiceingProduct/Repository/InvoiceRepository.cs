@@ -23,6 +23,7 @@ namespace InvoiceingProduct.Repository
             if (dbobject != null)
             {
                 model.IdInvoice = dbobject.IdInvoice;
+                model.InvoiceNumber=dbobject.InvoiceNumber;
                 model.IdPurchase = dbobject.IdPurchase;
                 model.InvoiceDate=dbobject.InvoiceDate;
                 model.InvoiceAmount=dbobject.InvoiceAmount;
@@ -38,6 +39,7 @@ namespace InvoiceingProduct.Repository
             if (model != null)
             {
                 dbobject.InvoiceDate = model.InvoiceDate;
+                dbobject.InvoiceNumber=model.InvoiceNumber;
                 dbobject.IdPurchase = model.IdPurchase;
                 dbobject.InvoiceDate = model.InvoiceDate;
                 dbobject.InvoiceAmount = model.InvoiceAmount;
@@ -72,6 +74,7 @@ namespace InvoiceingProduct.Repository
             if (dbobject != null)
             {
                 dbobject.InvoiceDate = model.InvoiceDate;
+                dbobject.InvoiceNumber=model.InvoiceNumber;
                 dbobject.IdPurchase = model.IdPurchase;
                 dbobject.InvoiceDate = model.InvoiceDate;
                 dbobject.InvoiceAmount = model.InvoiceAmount;

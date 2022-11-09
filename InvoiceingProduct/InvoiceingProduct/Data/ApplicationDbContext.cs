@@ -132,7 +132,7 @@ namespace InvoiceingProduct.Data
             modelBuilder.Entity<Invoice>(entity =>
             {
                 entity.HasKey(e => e.IdInvoice)
-                    .HasName("PK__Invoice__4AFC50A47DA848EC");
+                    .HasName("PK__tmp_ms_x__4AFC50A4A1A9C1D6");
 
                 entity.ToTable("Invoice");
 
@@ -158,7 +158,7 @@ namespace InvoiceingProduct.Data
             modelBuilder.Entity<Offer>(entity =>
             {
                 entity.HasKey(e => e.IdOffer)
-                    .HasName("PK__Offer__333FAA493868D870");
+                    .HasName("PK__tmp_ms_x__333FAA4961DD446E");
 
                 entity.ToTable("Offer");
 
@@ -167,6 +167,8 @@ namespace InvoiceingProduct.Data
                 entity.Property(e => e.Currency)
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.OfferName).HasMaxLength(50);
 
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
 
@@ -226,11 +228,13 @@ namespace InvoiceingProduct.Data
             modelBuilder.Entity<Purchase>(entity =>
             {
                 entity.HasKey(e => e.IdPurchase)
-                    .HasName("PK__Purchase__D99D14A5A2887908");
+                    .HasName("PK__tmp_ms_x__D99D14A533D6B71F");
 
                 entity.ToTable("Purchase");
 
                 entity.Property(e => e.IdPurchase).ValueGeneratedNever();
+
+                entity.Property(e => e.PurchaseName).HasMaxLength(50);
 
                 entity.HasOne(d => d.IdOfferNavigation)
                     .WithMany(p => p.Purchases)
