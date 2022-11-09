@@ -15,6 +15,7 @@ namespace InvoiceingProduct.Models.DBObjects
         public Guid IdOffer { get; set; }
         public int Quantity { get; set; }
 
+       
         public virtual Offer IdOfferNavigation { get; set; } = null!;
         public virtual ICollection<Invoice> Invoices { get; set; }
     }

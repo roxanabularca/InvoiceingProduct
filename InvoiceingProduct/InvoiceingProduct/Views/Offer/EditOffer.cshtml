@@ -14,22 +14,28 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-               @* <label asp-for="IdOffer" class="control-label"></label>*@
+                <label asp-for="OfferName" class="control-label"></label>
+                <input asp-for="OfferName" class="form-control" />
+                <span asp-validation-for="OfferName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+              @*  <label asp-for="IdOffer" class="control-label"></label>*@
                 <input asp-for="IdOffer" hidden class="form-control" />
-               @* <span asp-validation-for="IdOffer" class="text-danger"></span>*@
+              @*  <span asp-validation-for="IdOffer" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
                 @Html.DropDownList("IdProduct",@ViewBag.ProductList,"","")
-               @* <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>*@
+                @*<input asp-for="IdProduct" class="form-control" />
+                <span asp-validation-for="IdProduct" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="VendorName" class="control-label"></label>
-                  @Html.DropDownList("IdVendor",@ViewBag.VendorList,"","")
-                @*<input asp-for="VendorName" class="form-control" />
-                <span asp-validation-for="VendorName" class="text-danger"></span>*@
+                @Html.DropDownList("IdVendor",@ViewBag.VendorList,"","")
+              @*  <input asp-for="IdVendor" class="form-control" />
+                <span asp-validation-for="IdVendor" class="text-danger"></span>*@
             </div>
+            
             <div class="form-group">
                 <label asp-for="UnitPrice" class="control-label"></label>
                 <input asp-for="UnitPrice" class="form-control" />
@@ -45,6 +51,16 @@
                     <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
                 </label>
             </div>
+           @* <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorName" class="control-label"></label>
+                <input asp-for="VendorName" class="form-control" />
+                <span asp-validation-for="VendorName" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

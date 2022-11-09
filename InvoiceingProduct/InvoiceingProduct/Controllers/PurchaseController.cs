@@ -3,20 +3,29 @@ using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
     public class PurchaseController : Controller
     {
         private PurchaseRepository _purchaseRepository;
+        private OfferRepository _offerRepository;
         public PurchaseController(ApplicationDbContext dbcontext)
         {
+            _offerRepository= new OfferRepository(dbcontext);
             _purchaseRepository=new PurchaseRepository(dbcontext);
         }
         // GET: PurchaseController
         public ActionResult Index()
         {
             var list = _purchaseRepository.GetAllPurchases();
+            var offerList = _offerRepository.GetAllOffers();
+            foreach (var purchase in list)
+            {
+                purchase.OfferName = offerList?.FirstOrDefault(x => x.IdOffer == purchase.IdOffer)?.OfferName;
+            }
+
             return View(list);
         }
 
@@ -24,12 +33,18 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Details(Guid id)
         {
             var model = _purchaseRepository.GetPurchaseById(id);
+            var offer = _offerRepository.GetOfferById(model.IdOffer);
+            model.OfferName = offer.OfferName;
+
             return View("DetailsPurchase",model);
         }
 
         // GET: PurchaseController/Create
         public ActionResult Create()
         {
+            var offers = _offerRepository.GetAllOffers();
+            var offerList = offers.Select(x => new SelectListItem() { Text = x.OfferName, Value = x.IdOffer.ToString() });
+            ViewBag.OfferList = offerList;
             return View("CreatePurchase");
         }
 
@@ -59,6 +74,9 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _purchaseRepository.GetPurchaseById(id);
+            var offers = _offerRepository.GetAllOffers();
+            var offerList = offers.Select(x => new SelectListItem() { Text = x.OfferName, Value = x.IdOffer.ToString() });
+            ViewBag.OfferList = offerList;
             return View("EditPurchase",model);
         }
 
@@ -92,6 +110,8 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _purchaseRepository.GetPurchaseById(id);
+            var offer = _offerRepository.GetOfferById(model.IdOffer);
+            model.OfferName = offer.OfferName;
             return View("DeletePurchase",model);
         }
 

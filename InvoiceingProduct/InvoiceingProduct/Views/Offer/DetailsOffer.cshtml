@@ -11,12 +11,18 @@
     <h4>OfferModel</h4>
     <hr />
     <dl class="row">
-       @* <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdOffer)
-        </dt>
-        <dd class = "col-sm-10">
+        </dt>*@
+        @*<dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdOffer)
         </dd>*@
+           <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OfferName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OfferName)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
@@ -29,6 +35,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VendorName)
         </dd>
+     
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UnitPrice)
         </dt>
@@ -47,6 +54,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IsAvailable)
         </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VendorName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VendorName)
+        </dd>*@
     </dl>
 </div>
 <div>

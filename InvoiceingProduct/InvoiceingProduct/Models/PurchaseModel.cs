@@ -13,6 +13,8 @@ namespace InvoiceingProduct.Models
         [Range(1, int.MaxValue, ErrorMessage = "The quantity must be a positive number.")]
         public int Quantity { get; set; }
 
+        public string? OfferName { get; set; }
+
         //public List<OfferModel> offerModels { get; set; }
     }
 }

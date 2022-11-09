@@ -68,7 +68,6 @@ namespace InvoiceingProduct.Controllers
             {
                 var model = new OfferModel();
                 var task = TryUpdateModelAsync(model);
-                var errors = ModelState.Values.Select(x => x.Errors).ToList();
                 task.Wait();
                  
                 if (task.Result)
@@ -87,7 +86,6 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _offerRepository.GetOfferById(id);
-
             var products = _productRepository.GetAllProducts();
             var productList = products.Select(x => new SelectListItem() { Text = x.ProductName, Value = x.IdProduct.ToString() });
             ViewBag.ProductList = productList;
@@ -147,7 +145,7 @@ namespace InvoiceingProduct.Controllers
                 _offerRepository.DeleteOffer(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return RedirectToAction("Delete",id);
             }

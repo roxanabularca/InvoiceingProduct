@@ -18,8 +18,14 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.IdPurchase)
             </th>*@
-            <th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.IdOffer)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseName)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.OfferName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
@@ -33,8 +39,14 @@
             @*<td>
                 @Html.DisplayFor(modelItem => item.IdPurchase)
             </td>*@
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.IdOffer)
+            </td>*@
+              <td>
+                @Html.DisplayFor(modelItem => item.PurchaseName)
+            </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.OfferName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
