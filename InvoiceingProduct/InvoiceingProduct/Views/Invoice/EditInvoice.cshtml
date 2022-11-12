@@ -19,10 +19,15 @@
                @* <span asp-validation-for="IdInvoice" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="IdPurchase" class="control-label"></label>
-                <input asp-for="IdPurchase" class="form-control" />
-                <span asp-validation-for="IdPurchase" class="text-danger"></span>
+                <label asp-for="InvoiceNumber" class="control-label"></label>
+                <input asp-for="InvoiceNumber" class="form-control" />
+                <span asp-validation-for="InvoiceNumber" class="text-danger"></span>
             </div>
+             @* <div class="form-group">
+                <label asp-for="IdPurchase" class="control-label"></label>*@
+                <input asp-for="IdPurchase" hidden class="form-control" />
+               @* <span asp-validation-for="IdPurchase" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="InvoiceDate" class="control-label"></label>
                 <input asp-for="InvoiceDate" class="form-control" />
@@ -32,6 +37,12 @@
                 <label asp-for="InvoiceAmount" class="control-label"></label>
                 <input asp-for="InvoiceAmount" class="form-control" />
                 <span asp-validation-for="InvoiceAmount" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="PurchaseName" class="control-label"></label>
+                @Html.DropDownList("IdPurchase",@ViewBag.PurchaseList,"","")
+                @*<input asp-for="IdProduct" class="form-control" />
+                <span asp-validation-for="IdProduct" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="TaxAmount" class="control-label"></label>

@@ -19,13 +19,16 @@
                 @Html.DisplayNameFor(model => model.IdInvoice)
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.IdPurchase)
+                @Html.DisplayNameFor(model => model.InvoiceNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceAmount)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.PurchaseName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TaxAmount)
@@ -46,19 +49,24 @@
                 @Html.DisplayFor(modelItem => item.IdInvoice)
             </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.IdPurchase)
+                @Html.DisplayFor(modelItem => item.InvoiceNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InvoiceDate)
+                @*@Html.DisplayFor(modelItem => item.InvoiceDate.ToShortDateString())*@
+                 @item.InvoiceDate.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.InvoiceAmount)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.PurchaseName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TaxAmount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
+               @* @Html.DisplayFor(modelItem => item.DueDate.ToShortDateString())*@
+                @item.DueDate.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments)

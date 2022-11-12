@@ -3,22 +3,30 @@ using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
     public class InvoiceController : Controller
     {
         private InvoiceRepository _invoiceRepository;
-
+        private PurchaseRepository _purchaseRepository;
         public InvoiceController(ApplicationDbContext dbcontext)
         { 
-        _invoiceRepository = new InvoiceRepository(dbcontext);
+            _invoiceRepository = new InvoiceRepository(dbcontext);
+            _purchaseRepository= new PurchaseRepository(dbcontext);
         }
 
         // GET: InvoiceController
         public ActionResult Index()
         {
             var list = _invoiceRepository.GetAllInvoices();
+            var purchaseList = _purchaseRepository.GetAllPurchases();
+            foreach (var invoice in list)
+            {
+                invoice.PurchaseName = purchaseList?.FirstOrDefault(x=> x.IdPurchase == invoice.IdPurchase)?.PurchaseName;
+            }
+
             return View(list);
         }
 
@@ -26,12 +34,17 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Details(Guid id)
         {
             var model = _invoiceRepository.GetInvoiceById(id);
+            var purchase = _purchaseRepository.GetPurchaseById(model.IdPurchase);
+            model.PurchaseName=purchase.PurchaseName;
             return View("DetailsInvoice",model);
         }
 
         // GET: InvoiceController/Create
         public ActionResult Create()
         {
+            var purchases = _purchaseRepository.GetAllPurchases();
+            var purchaseList = purchases.Select(x => new SelectListItem() { Text = x.PurchaseName, Value = x.IdPurchase.ToString() });
+            ViewBag.PurchaseList = purchaseList;
             return View("CreateInvoice");
         }
 
@@ -61,6 +74,9 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _invoiceRepository.GetInvoiceById(id);
+            var purchases = _purchaseRepository.GetAllPurchases();
+            var purchaseList = purchases.Select(x => new SelectListItem() { Text = x.PurchaseName, Value = x.IdPurchase.ToString() });
+            ViewBag.PurchaseList = purchaseList;
             return View("EditInvoice",model);
         }
 
@@ -94,6 +110,8 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _invoiceRepository.GetInvoiceById(id);
+            var purchase = _purchaseRepository.GetPurchaseById(model.IdPurchase);
+            model.PurchaseName = purchase.PurchaseName;
             return View("DeleteInvoice",model);
         }
 

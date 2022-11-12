@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace InvoiceingProduct.Models
 {
@@ -24,6 +25,8 @@ namespace InvoiceingProduct.Models
         [DisplayFormat(DataFormatString = "0:MM/dd/yyyy")]
         [DataType(DataType.Date)]
         public DateTime DueDate { get; set; }
+
+        public string? PurchaseName{ get; set; }
         public string? Comments { get; set; }
 
         //public List<PurchaseModel> purchaseModels { get; set; }

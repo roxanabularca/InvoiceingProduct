@@ -18,9 +18,9 @@
           @*  <th>
                 @Html.DisplayNameFor(model => model.IdPayment)
             </th>*@
-            <th>
+         @*   <th>
                 @Html.DisplayNameFor(model => model.IdInvoice)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.PaymentDate)
             </th>
@@ -42,11 +42,12 @@
            @* <td>
                 @Html.DisplayFor(modelItem => item.IdPayment)
             </td>*@
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.IdInvoice)
-            </td>
+            </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.PaymentDate)
+                @*@Html.DisplayFor(modelItem => item.PaymentDate)*@
+                @item.PaymentDate.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PaymentType)

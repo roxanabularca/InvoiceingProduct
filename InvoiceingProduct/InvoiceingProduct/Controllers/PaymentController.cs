@@ -3,21 +3,29 @@ using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
     public class PaymentController : Controller
     {
         private PaymentRepository _paymentRepository;
+        private InvoiceRepository _invoiceRepository;
 
         public PaymentController(ApplicationDbContext dbcontext)
         {
             _paymentRepository = new PaymentRepository(dbcontext);
+            _invoiceRepository = new InvoiceRepository(dbcontext);
         }
         // GET: PaymentController
         public ActionResult Index()
         {
             var list = _paymentRepository.GelAllPayments();
+            var invoiceList = _invoiceRepository.GetAllInvoices();
+            foreach(var payment in list)
+            {
+                payment.InvoiceNumber=invoiceList?.FirstOrDefault(x=> x.IdInvoice==payment.IdInvoice)?.InvoiceNumber;
+            }
             return View(list);
         }
 
@@ -25,12 +33,17 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Details(Guid id)
         {
             var model = _paymentRepository.GetPaymentById(id);
+            var invoice = _invoiceRepository.GetInvoiceById(model.IdInvoice);
+            model.InvoiceNumber = invoice.InvoiceNumber;
             return View("DetailsPayment",model);
         }
 
         // GET: PaymentController/Create
         public ActionResult Create()
         {
+            var invoices = _invoiceRepository.GetAllInvoices();
+            var invoiceList = invoices.Select(x => new SelectListItem() { Text = x.InvoiceNumber.ToString(), Value = x.IdInvoice.ToString() });
+            ViewBag.InvoiceList=invoiceList;
             return View("CreatePayment");
         }
 
@@ -60,6 +73,9 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _paymentRepository.GetPaymentById(id);
+            var invoices = _invoiceRepository.GetAllInvoices();
+            var invoiceList = invoices.Select(x => new SelectListItem() { Text = x.InvoiceNumber.ToString(), Value = x.IdInvoice.ToString() });
+            ViewBag.InvoiceList = invoiceList;
             return View("EditPayment",model);
         }
 
@@ -93,6 +109,8 @@ namespace InvoiceingProduct.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _paymentRepository.GetPaymentById(id);
+            var invoice = _invoiceRepository.GetInvoiceById(model.IdInvoice);
+            model.InvoiceNumber = invoice.InvoiceNumber;
             return View("DeletePayment",model);
         }
 

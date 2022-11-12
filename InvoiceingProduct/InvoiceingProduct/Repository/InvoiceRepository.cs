@@ -38,6 +38,7 @@ namespace InvoiceingProduct.Repository
             var dbobject = new Invoice();
             if (model != null)
             {
+                dbobject.IdInvoice = model.IdInvoice;
                 dbobject.InvoiceDate = model.InvoiceDate;
                 dbobject.InvoiceNumber=model.InvoiceNumber;
                 dbobject.IdPurchase = model.IdPurchase;
@@ -73,6 +74,7 @@ namespace InvoiceingProduct.Repository
             var dbobject = _DBContext.Invoices.FirstOrDefault(x => x.IdInvoice == model.IdInvoice);
             if (dbobject != null)
             {
+                dbobject.IdInvoice = model.IdInvoice;
                 dbobject.InvoiceDate = model.InvoiceDate;
                 dbobject.InvoiceNumber=model.InvoiceNumber;
                 dbobject.IdPurchase = model.IdPurchase;

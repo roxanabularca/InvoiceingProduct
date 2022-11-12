@@ -19,16 +19,23 @@
             @Html.DisplayFor(model => model.IdInvoice)
         </dd>*@
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InvoiceNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InvoiceNumber)
+       @* </dd>
+          <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdPurchase)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdPurchase)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.InvoiceDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.InvoiceDate)
+            @*@Html.DisplayFor(model => model.InvoiceDate)*@
+             @Model.InvoiceDate.ToShortDateString()
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.InvoiceAmount)
@@ -46,7 +53,8 @@
             @Html.DisplayNameFor(model => model.DueDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DueDate)
+           @* @Html.DisplayFor(model => model.DueDate)*@
+            @Model.DueDate.ToShortDateString()
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Comments)

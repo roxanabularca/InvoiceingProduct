@@ -18,6 +18,8 @@ namespace InvoiceingProduct.Models
         public decimal  AmountPaid { get; set; }
 
         [StringLength(50, ErrorMessage = "String too long( max. 50 characters)")]
+
+        public int? InvoiceNumber { get; set; }
         public string PaymentAuthorization { get; set; } = null!;
     }
 }
