@@ -1,12 +1,14 @@
 ﻿using InvoiceingProduct.Data;
 using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
+    [Authorize(Roles = "Treasurer,Accountant,Admin")]
     public class PaymentController : Controller
     {
         private PaymentRepository _paymentRepository;
@@ -39,6 +41,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PaymentController/Create
+        [Authorize(Roles = "Treasurer,Admin")]
         public ActionResult Create()
         {
             var invoices = _invoiceRepository.GetAllInvoices();
@@ -48,6 +51,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // POST: PaymentController/Create
+        [Authorize(Roles = "Treasurer,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -70,6 +74,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PaymentController/Edit/5
+        [Authorize(Roles = "Treasurer,Admin")]
         public ActionResult Edit(Guid id)
         {
             var model = _paymentRepository.GetPaymentById(id);
@@ -82,6 +87,7 @@ namespace InvoiceingProduct.Controllers
         // POST: PaymentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Treasurer,Admin")]
         public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
@@ -106,6 +112,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PaymentController/Delete/5
+        [Authorize(Roles = "Treasurer,Admin")]
         public ActionResult Delete(Guid id)
         {
             var model = _paymentRepository.GetPaymentById(id);
@@ -115,6 +122,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // POST: PaymentController/Delete/5
+        [Authorize(Roles = "Treasurer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, IFormCollection collection)

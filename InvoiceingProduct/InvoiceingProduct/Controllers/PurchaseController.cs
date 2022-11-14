@@ -1,20 +1,24 @@
 ﻿using InvoiceingProduct.Data;
 using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
+    [Authorize(Roles = "Purchaser,Accountant,Admin")]
     public class PurchaseController : Controller
     {
         private PurchaseRepository _purchaseRepository;
         private OfferRepository _offerRepository;
+        private InvoiceRepository _invoiceRepository;
         public PurchaseController(ApplicationDbContext dbcontext)
         {
             _offerRepository= new OfferRepository(dbcontext);
             _purchaseRepository=new PurchaseRepository(dbcontext);
+            _invoiceRepository = new InvoiceRepository(dbcontext);
         }
         // GET: PurchaseController
         public ActionResult Index()
@@ -40,6 +44,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PurchaseController/Create
+        [Authorize(Roles = "Purchaser,Admin")]
         public ActionResult Create()
         {
             var offers = _offerRepository.GetAllOffers();
@@ -49,6 +54,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // POST: PurchaseController/Create
+        [Authorize(Roles = "Purchaser,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -71,6 +77,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PurchaseController/Edit/5
+        [Authorize(Roles = "Purchaser,Admin")]
         public ActionResult Edit(Guid id)
         {
             var model = _purchaseRepository.GetPurchaseById(id);
@@ -81,6 +88,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // POST: PurchaseController/Edit/5
+        [Authorize(Roles = "Purchaser,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid id, IFormCollection collection)
@@ -107,8 +115,10 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: PurchaseController/Delete/5
+        [Authorize(Roles = "Purchaser,Admin")]
         public ActionResult Delete(Guid id)
         {
+            ViewBag.ErrorMessage = TempData["PurchaseErrorMessage"];
             var model = _purchaseRepository.GetPurchaseById(id);
             var offer = _offerRepository.GetOfferById(model.IdOffer);
             model.OfferName = offer.OfferName;
@@ -116,17 +126,37 @@ namespace InvoiceingProduct.Controllers
         }
 
         // POST: PurchaseController/Delete/5
+        [Authorize(Roles = "Purchaser,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
-                _purchaseRepository.DeletaPurchase(id);
-                return RedirectToAction(nameof(Index));
+                var listInvoice = _invoiceRepository.GetAllInvoices();
+                bool hasInvoice = false;
+                foreach(var invoice in listInvoice)
+                {
+                    if (invoice.IdPurchase==id)
+                    {
+                        hasInvoice = true;
+                        break;
+                    }
+                }
+                if (!hasInvoice)
+                {
+                    _purchaseRepository.DeletaPurchase(id);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["PurchaseErrorMessage"] = "The purchase cannot be deleted, it has an invoice associated.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
+            catch(Exception ex)
             {
+                TempData["PurchaseErrorMessage"] = ex.Message;
                 return RedirectToAction("Delete",id);
             }
         }

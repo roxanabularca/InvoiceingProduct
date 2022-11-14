@@ -1,12 +1,14 @@
 ﻿using InvoiceingProduct.Data;
 using InvoiceingProduct.Models;
 using InvoiceingProduct.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceingProduct.Controllers
 {
+    [Authorize(Roles = "Accountant,Admin")]
     public class InvoiceController : Controller
     {
         private InvoiceRepository _invoiceRepository;

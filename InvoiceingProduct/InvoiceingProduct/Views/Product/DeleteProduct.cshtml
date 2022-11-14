@@ -11,6 +11,13 @@
 <div>
     <h4>ProductModel</h4>
     <hr />
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="errorMessage"> 
+            @ViewBag.ErrorMessage
+        </div>
+    }
+        
     <dl class="row">
        @* <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdProduct)

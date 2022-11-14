@@ -20,3 +20,7 @@ body {
 select {
     width :100%;
 }
+
+.errorMessage {
+    color: red;
+}
