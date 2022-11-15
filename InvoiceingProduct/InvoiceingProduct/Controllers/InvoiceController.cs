@@ -13,10 +13,12 @@ namespace InvoiceingProduct.Controllers
     {
         private InvoiceRepository _invoiceRepository;
         private PurchaseRepository _purchaseRepository;
+        private PaymentRepository _paymentRepository;
         public InvoiceController(ApplicationDbContext dbcontext)
         { 
             _invoiceRepository = new InvoiceRepository(dbcontext);
             _purchaseRepository= new PurchaseRepository(dbcontext);
+            _paymentRepository = new PaymentRepository(dbcontext);
         }
 
         // GET: InvoiceController
@@ -111,6 +113,7 @@ namespace InvoiceingProduct.Controllers
         // GET: InvoiceController/Delete/5
         public ActionResult Delete(Guid id)
         {
+            ViewBag.ErrorMessage = TempData["InvoiceErrorMessage"];
             var model = _invoiceRepository.GetInvoiceById(id);
             var purchase = _purchaseRepository.GetPurchaseById(model.IdPurchase);
             model.PurchaseName = purchase.PurchaseName;
@@ -124,11 +127,31 @@ namespace InvoiceingProduct.Controllers
         {
             try
             {
-                _invoiceRepository.DeleteInvoice(id);
-                return RedirectToAction(nameof(Index));
+                var listPayment = _paymentRepository.GelAllPayments();
+                bool hasPayment = false;
+                foreach (var payment in listPayment)
+                {
+                    if(payment.IdInvoice == id)
+                    {
+                        hasPayment = true;
+                        break;
+                    }
+                }
+                if (!hasPayment)
+                {
+                    _invoiceRepository.DeleteInvoice(id);
+                    return RedirectToAction(nameof(Index));
+                }
+
+              else
+                {
+                    TempData["InvoiceErrorMessage"] = "Cannot delete the invoice because has a payment associated.";
+                    return RedirectToAction("Delete", id);
+;                }
             }
-            catch
+            catch(Exception ex)
             {
+                TempData["InvoiceErrorMessage"] = ex.Message;
                 return RedirectToAction("Delete",id);
             }
         }

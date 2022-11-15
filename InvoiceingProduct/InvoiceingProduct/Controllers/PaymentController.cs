@@ -122,7 +122,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // POST: PaymentController/Delete/5
-        [Authorize(Roles = "Treasurer")]
+        [Authorize(Roles = "Treasurer,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, IFormCollection collection)
