@@ -151,7 +151,7 @@ namespace InvoiceingProduct.Controllers
                 }
                 else
                 {
-                    TempData["VendorErrorMessage"] = "This vendor is associated with an offer that has a purchase.Cannot delete!";
+                    TempData["VendorErrorMessage"] = "Cannot delete the vendor because has an offer associated.";
                     return RedirectToAction("Delete",id);
                 }
             }

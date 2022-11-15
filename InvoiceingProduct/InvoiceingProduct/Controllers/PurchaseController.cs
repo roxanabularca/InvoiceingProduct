@@ -150,7 +150,7 @@ namespace InvoiceingProduct.Controllers
                 }
                 else
                 {
-                    TempData["PurchaseErrorMessage"] = "The purchase cannot be deleted, it has an invoice associated.";
+                    TempData["PurchaseErrorMessage"] = "Cannot delete a purchase because has an invoice associated.";
                     return RedirectToAction(nameof(Index));
                 }
             }

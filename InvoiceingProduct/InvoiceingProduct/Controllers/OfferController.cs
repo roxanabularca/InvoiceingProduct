@@ -172,7 +172,7 @@ namespace InvoiceingProduct.Controllers
                 }
                 else
                 {
-                    TempData["OfferErrorMessage"] = "Cannot delete offer because has purchase associated.";
+                    TempData["OfferErrorMessage"] = "Cannot delete the offer because has a purchase associated.";
                     return RedirectToAction("Delete", id);
                 }
 

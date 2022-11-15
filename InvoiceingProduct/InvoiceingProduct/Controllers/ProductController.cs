@@ -154,7 +154,7 @@ namespace InvoiceingProduct.Controllers
                 }
                 else
                 {
-                    TempData["ProductErrorMessage"] = "This product is associated with an offer that has a purchase. Cannot delete!";
+                    TempData["ProductErrorMessage"] = "Cannote delete the product because has associated an offer associated.";
                     return RedirectToAction("Delete", id);
                 }
             }
