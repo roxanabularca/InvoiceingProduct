@@ -15,6 +15,6 @@ namespace InvoiceingProduct.Models
 
         public string? OfferName { get; set; }
 
-        //public List<OfferModel> offerModels { get; set; }
+       
     }
 }

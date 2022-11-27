@@ -33,7 +33,7 @@ namespace InvoiceingProduct.Controllers
         }
 
         // GET: VendorController/Create
-        [Authorize(Roles = "Purchaser")]
+        [Authorize(Roles = "Purchaser,Admin")]
         public ActionResult Create()
         {
             return View("CreateVendor");
@@ -117,7 +117,6 @@ namespace InvoiceingProduct.Controllers
                 var listPurchase = _purchaseRepository.GetAllPurchases();
                 bool hasOffer = false;
                 bool hasPurchase = false;
-
                 foreach (var offer in listOffer)
                 {
                     if(offer.IdVendor == id)
@@ -133,7 +132,6 @@ namespace InvoiceingProduct.Controllers
                         }
                     }
                 }
-
                 if (!hasPurchase)
                 {
                     if (hasOffer)
